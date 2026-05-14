@@ -1,0 +1,20 @@
+.page {
+  min-height: 100vh;
+  background: var(--color-canvas);
+  color: var(--color-text);
+  overflow-x: auto;
+}
+
+.main {
+  width: 100%;
+  min-width: var(--layout-min-width);
+  max-width: var(--layout-max-width);
+  margin: 0 auto;
+  padding: 56px var(--layout-gutter) 80px;
+}
+
+@media (max-width: 1279px) {
+  .main {
+    max-width: none;
+  }
+}
