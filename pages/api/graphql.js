@@ -1,4 +1,4 @@
-import { graphql } from 'graphql';
+import { graphql } from 'graphql/index.mjs';
 import { rootValue } from '../../server/graphql/resolvers';
 import { schema } from '../../server/graphql/schema';
 

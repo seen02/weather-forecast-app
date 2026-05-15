@@ -5,6 +5,10 @@ export const SUPPORTED_CITIES = [
     displayName: 'Seoul',
     countryCode: 'KR',
     path: '/Seoul',
+    coordinates: {
+      latitude: 37.5665,
+      longitude: 126.978,
+    },
   },
   {
     id: 'tokyo',
@@ -12,6 +16,10 @@ export const SUPPORTED_CITIES = [
     displayName: 'Tokyo',
     countryCode: 'JP',
     path: '/Tokyo',
+    coordinates: {
+      latitude: 35.6762,
+      longitude: 139.6503,
+    },
   },
   {
     id: 'paris',
@@ -19,6 +27,10 @@ export const SUPPORTED_CITIES = [
     displayName: 'Paris',
     countryCode: 'FR',
     path: '/Paris',
+    coordinates: {
+      latitude: 48.8566,
+      longitude: 2.3522,
+    },
   },
   {
     id: 'london',
@@ -26,6 +38,10 @@ export const SUPPORTED_CITIES = [
     displayName: 'London',
     countryCode: 'GB',
     path: '/London',
+    coordinates: {
+      latitude: 51.5074,
+      longitude: -0.1278,
+    },
   },
 ];
 
