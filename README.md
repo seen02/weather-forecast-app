@@ -71,7 +71,11 @@ http://localhost:3000
 
 ## 참고 산출물
 
-프로젝트 진행 과정, 설계, 코드 컨벤션, Git 컨벤션, 학습 기록, 구현 로그는 `project-artifacts` 디렉토리에 정리했습니다.
+이번 과제를 수행하며 처음 접한 기술(Next.js 12, GraphQL, Apollo 등)을 조사, 학습하고 구현에 적용한 전체 과정은 아래 문서에 기록했습니다.
+
+- [기술 리서치 및 AI 주도 개발 과정 (dev-log.md)](./project-artifacts/dev-log.md)
+
+그 외 프로젝트 진행 과정, 설계, 코드 컨벤션, Git 컨벤션 등 전체 산출물 또한 [`/project-artifacts`](./project-artifacts) 디렉토리에서 확인하실 수 있습니다.
 
 ## GraphQL API
 
