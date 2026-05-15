@@ -1,9 +1,11 @@
 import { useQuery } from '@apollo/client/react';
 import PageLayout from '../components/layout/PageLayout';
 import CurrentWeatherCard from '../components/weather/CurrentWeatherCard';
+import ForecastSection from '../components/weather/ForecastSection';
 import { getCityByName, SUPPORTED_CITIES } from '../constants/cities';
 import { WEATHER_BY_CITY_QUERY } from '../graphql/queries';
 import styles from '../styles/CityDetail.module.css';
+import { getDailyForecasts } from '../utils/forecast';
 
 const CityDetailPage = ({ city }) => {
   const { data, error, loading } = useQuery(WEATHER_BY_CITY_QUERY, {
@@ -13,7 +15,7 @@ const CityDetailPage = ({ city }) => {
   });
   const weather = data?.weatherByCity;
   const currentWeather = weather?.current;
-  const forecastCount = weather?.forecast?.length || 0;
+  const dailyForecasts = getDailyForecasts(weather?.forecast);
 
   return (
     <PageLayout
@@ -31,17 +33,11 @@ const CityDetailPage = ({ city }) => {
           isLoading={loading}
           weather={currentWeather}
         />
-
-        <article className={styles.panel}>
-          <h2 className={styles.panelTitle}>5 Day Forecast</h2>
-          {loading && <p className={styles.statusText}>Loading forecast data...</p>}
-          {error && <p className={styles.errorText}>Forecast is unavailable.</p>}
-          {!loading && !error && weather && (
-            <p className={styles.forecastSummary}>
-              {forecastCount} forecast items loaded from GraphQL.
-            </p>
-          )}
-        </article>
+        <ForecastSection
+          forecasts={dailyForecasts}
+          hasError={Boolean(error)}
+          isLoading={loading}
+        />
       </section>
     </PageLayout>
   );
