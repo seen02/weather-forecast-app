@@ -1,11 +1,23 @@
+import dynamic from 'next/dynamic';
 import { useQuery } from '@apollo/client/react';
 import PageLayout from '../components/layout/PageLayout';
 import CurrentWeatherCard from '../components/weather/CurrentWeatherCard';
-import ForecastSection from '../components/weather/ForecastSection';
 import { getCityByName, SUPPORTED_CITIES } from '../constants/cities';
 import { WEATHER_BY_CITY_QUERY } from '../graphql/queries';
 import styles from '../styles/CityDetail.module.css';
 import { getDailyForecastGroups } from '../utils/forecast';
+
+const ForecastSection = dynamic(
+  () => import('../components/weather/ForecastSection'),
+  {
+    loading: () => (
+      <section className={styles.forecastLoading} aria-label="Loading forecast">
+        <h2 className={styles.forecastLoadingTitle}>5-day Forecast</h2>
+        <p className={styles.forecastLoadingText}>Loading forecast data...</p>
+      </section>
+    ),
+  }
+);
 
 const CityDetailPage = ({ city }) => {
   const { data, error, loading } = useQuery(WEATHER_BY_CITY_QUERY, {
