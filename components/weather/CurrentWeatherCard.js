@@ -1,11 +1,11 @@
 import {
-  formatMeasuredTime,
-  formatTemperature,
+  formatPreciseTemperature,
   formatWindSpeed,
+  formatWeatherDateTime,
 } from '../../utils/weather';
 import styles from './CurrentWeatherCard.module.css';
 
-const CurrentWeatherCard = ({ hasError, isLoading, weather }) => {
+const CurrentWeatherCard = ({ city, hasError, isLoading, weather }) => {
   if (isLoading) {
     return (
       <article className={styles.card} aria-labelledby="current-weather-title">
@@ -41,36 +41,29 @@ const CurrentWeatherCard = ({ hasError, isLoading, weather }) => {
 
   return (
     <article className={styles.card} aria-labelledby="current-weather-title">
-      <header className={styles.header}>
-        <div>
-          <h2 id="current-weather-title" className={styles.title}>
-            Current Weather
-          </h2>
-          <p className={styles.description}>{weather.description}</p>
-        </div>
-        <p className={styles.temperature}>
-          {formatTemperature(weather.temperature)}
-        </p>
-      </header>
+      <div className={styles.icon} aria-hidden="true">
+        Weather
+        <br />
+        icon
+      </div>
 
-      <dl className={styles.weatherList}>
-        <div className={styles.weatherItem}>
-          <dt>Feels Like</dt>
-          <dd>{formatTemperature(weather.feelsLike)}</dd>
-        </div>
-        <div className={styles.weatherItem}>
-          <dt>Humidity</dt>
-          <dd>{weather.humidity}%</dd>
-        </div>
-        <div className={styles.weatherItem}>
-          <dt>Wind</dt>
-          <dd>{formatWindSpeed(weather.windSpeed)}</dd>
-        </div>
-        <div className={styles.weatherItem}>
-          <dt>Measured At</dt>
-          <dd>{formatMeasuredTime(weather.measuredAt)}</dd>
-        </div>
-      </dl>
+      <div className={styles.cityInfo}>
+        <p className={styles.measuredAt}>{formatWeatherDateTime(weather.measuredAt)}</p>
+        <h2 id="current-weather-title" className={styles.city}>
+          {city.displayName}, {city.countryCode}
+          <span className={styles.population}>(인구수 : {city.population})</span>
+        </h2>
+      </div>
+
+      <div className={styles.temperatureGroup}>
+        <p className={styles.temperature}>
+          {formatPreciseTemperature(weather.temperature)}
+        </p>
+        <p className={styles.description}>
+          Feels like {formatPreciseTemperature(weather.feelsLike)} {weather.description}{' '}
+          풍속 {formatWindSpeed(weather.windSpeed)} 습도 {weather.humidity}%
+        </p>
+      </div>
     </article>
   );
 };

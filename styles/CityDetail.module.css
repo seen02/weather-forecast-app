@@ -1,26 +1,36 @@
-.header {
-  display: grid;
-  gap: 12px;
-  padding: 72px 0 40px;
+.page {
+  min-height: 863px;
+  padding: 28px 40px 60px;
+  background: var(--color-canvas);
 }
 
-.eyebrow {
-  margin: 0;
-  color: var(--color-primary);
-  font-size: 15px;
-  font-weight: 800;
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.headerIcon {
+  width: 68px;
+  height: 51px;
+  font-size: 42px;
+  line-height: 51px;
+  text-align: center;
 }
 
 .title {
   margin: 0;
   color: var(--color-text);
-  font-size: 56px;
-  font-weight: 800;
-  line-height: 1.08;
+  font-size: 40px;
+  font-weight: 900;
+  line-height: 110%;
+  letter-spacing: -0.6px;
+  text-align: center;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
-  gap: 24px;
+  gap: 27px;
+  margin-top: 34px;
 }

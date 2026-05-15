@@ -10,7 +10,7 @@
   min-width: var(--layout-min-width);
   max-width: var(--layout-max-width);
   margin: 0 auto;
-  padding: 56px var(--layout-gutter) 80px;
+  padding: 0;
 }
 
 @media (max-width: 1279px) {

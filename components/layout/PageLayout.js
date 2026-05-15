@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import Header from './Header';
 import styles from './PageLayout.module.css';
 
 const PageLayout = ({ title = 'Weather Forecast', description, children }) => {
@@ -16,7 +15,6 @@ const PageLayout = ({ title = 'Weather Forecast', description, children }) => {
       </Head>
 
       <div className={styles.page}>
-        <Header />
         <main className={styles.main}>{children}</main>
       </div>
     </>
