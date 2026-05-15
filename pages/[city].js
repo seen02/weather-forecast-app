@@ -1,5 +1,6 @@
 import { useQuery } from '@apollo/client/react';
 import PageLayout from '../components/layout/PageLayout';
+import CurrentWeatherCard from '../components/weather/CurrentWeatherCard';
 import { getCityByName, SUPPORTED_CITIES } from '../constants/cities';
 import { WEATHER_BY_CITY_QUERY } from '../graphql/queries';
 import styles from '../styles/CityDetail.module.css';
@@ -11,6 +12,7 @@ const CityDetailPage = ({ city }) => {
     },
   });
   const weather = data?.weatherByCity;
+  const currentWeather = weather?.current;
   const forecastCount = weather?.forecast?.length || 0;
 
   return (
@@ -24,31 +26,11 @@ const CityDetailPage = ({ city }) => {
       </header>
 
       <section className={styles.grid} aria-label={`${city.displayName} weather`}>
-        <article className={styles.panel}>
-          <h2 className={styles.panelTitle}>Current Weather</h2>
-          {loading && <p className={styles.statusText}>Loading weather data...</p>}
-          {error && <p className={styles.errorText}>{error.message}</p>}
-          {!loading && !error && weather && (
-            <dl className={styles.weatherList}>
-              <div className={styles.weatherItem}>
-                <dt>Temperature</dt>
-                <dd>{Math.round(weather.current.temperature)}°C</dd>
-              </div>
-              <div className={styles.weatherItem}>
-                <dt>Feels Like</dt>
-                <dd>{Math.round(weather.current.feelsLike)}°C</dd>
-              </div>
-              <div className={styles.weatherItem}>
-                <dt>Humidity</dt>
-                <dd>{weather.current.humidity}%</dd>
-              </div>
-              <div className={styles.weatherItem}>
-                <dt>Wind</dt>
-                <dd>{weather.current.windSpeed} m/s</dd>
-              </div>
-            </dl>
-          )}
-        </article>
+        <CurrentWeatherCard
+          hasError={Boolean(error)}
+          isLoading={loading}
+          weather={currentWeather}
+        />
 
         <article className={styles.panel}>
           <h2 className={styles.panelTitle}>5 Day Forecast</h2>
