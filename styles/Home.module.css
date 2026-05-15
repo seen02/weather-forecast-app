@@ -1,22 +1,164 @@
-.intro {
-  display: grid;
-  align-content: start;
-  gap: 16px;
-  padding: 72px 0 40px;
+.page {
+  position: relative;
+  min-height: 863px;
+  background: var(--color-canvas);
+}
+
+.titleGroup {
+  position: absolute;
+  top: 101px;
+  left: 50%;
+  display: flex;
+  width: 549px;
+  transform: translateX(-50%);
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
 }
 
 .title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin: 0;
-  max-width: 760px;
   color: var(--color-text);
-  font-size: 56px;
-  font-weight: 800;
-  line-height: 1.08;
+  font-size: 82px;
+  font-weight: 900;
+  line-height: 110%;
+  letter-spacing: -0.6px;
+  text-align: center;
 }
 
-.eyebrow {
-  margin: 0;
+.titleAccent {
   color: var(--color-primary);
-  font-size: 15px;
-  font-weight: 700;
+}
+
+.description {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 150%;
+  text-align: center;
+}
+
+.cityNav {
+  position: absolute;
+  top: 345px;
+  left: 50%;
+  width: 593px;
+  transform: translateX(-50%);
+}
+
+.heroImage {
+  position: absolute;
+  top: 451px;
+  left: 50%;
+  width: 430px;
+  height: 321px;
+  transform: translateX(-50%);
+}
+
+.globe {
+  position: absolute;
+  top: 0;
+  left: 95px;
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  font-size: 210px;
+  line-height: 240px;
+  text-align: center;
+  filter: drop-shadow(0 18px 18px rgba(61, 61, 61, 0.14));
+}
+
+.cloudLeft,
+.cloudRight,
+.cloudBottom {
+  position: absolute;
+  z-index: 1;
+  height: 44px;
+  border-radius: 999px;
+  background: #ffffff;
+  box-shadow: 0 12px 20px rgba(255, 171, 162, 0.28);
+}
+
+.cloudLeft::before,
+.cloudLeft::after,
+.cloudRight::before,
+.cloudRight::after,
+.cloudBottom::before,
+.cloudBottom::after {
+  position: absolute;
+  content: '';
+  border-radius: 50%;
+  background: #ffffff;
+}
+
+.cloudLeft {
+  top: 37px;
+  left: 18px;
+  width: 106px;
+}
+
+.cloudLeft::before {
+  top: -20px;
+  left: 28px;
+  width: 42px;
+  height: 42px;
+}
+
+.cloudLeft::after {
+  top: -10px;
+  left: 62px;
+  width: 36px;
+  height: 36px;
+}
+
+.cloudRight {
+  top: 78px;
+  right: 10px;
+  width: 112px;
+}
+
+.cloudRight::before {
+  top: -24px;
+  left: 24px;
+  width: 50px;
+  height: 50px;
+}
+
+.cloudRight::after {
+  top: -8px;
+  left: 70px;
+  width: 34px;
+  height: 34px;
+}
+
+.cloudBottom {
+  top: 210px;
+  left: 10px;
+  width: 150px;
+}
+
+.cloudBottom::before {
+  top: -26px;
+  left: 38px;
+  width: 58px;
+  height: 58px;
+}
+
+.cloudBottom::after {
+  top: -12px;
+  left: 92px;
+  width: 42px;
+  height: 42px;
+}
+
+@media (max-width: 1279px) {
+  .cityNav,
+  .heroImage,
+  .titleGroup {
+    left: 50%;
+  }
 }

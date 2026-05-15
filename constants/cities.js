@@ -4,6 +4,7 @@ export const SUPPORTED_CITIES = [
     name: 'Seoul',
     displayName: 'Seoul',
     countryCode: 'KR',
+    population: 10349312,
     path: '/Seoul',
     coordinates: {
       latitude: 37.5665,
@@ -15,6 +16,7 @@ export const SUPPORTED_CITIES = [
     name: 'Tokyo',
     displayName: 'Tokyo',
     countryCode: 'JP',
+    population: 13929286,
     path: '/Tokyo',
     coordinates: {
       latitude: 35.6762,
@@ -26,6 +28,7 @@ export const SUPPORTED_CITIES = [
     name: 'Paris',
     displayName: 'Paris',
     countryCode: 'FR',
+    population: 2148327,
     path: '/Paris',
     coordinates: {
       latitude: 48.8566,
@@ -37,6 +40,7 @@ export const SUPPORTED_CITIES = [
     name: 'London',
     displayName: 'London',
     countryCode: 'GB',
+    population: 8982000,
     path: '/London',
     coordinates: {
       latitude: 51.5074,

@@ -6,7 +6,6 @@ const CityButton = ({ city }) => {
     <Link href={city.path}>
       <a className={styles.button}>
         <span className={styles.name}>{city.displayName}</span>
-        <span className={styles.country}>{city.countryCode}</span>
       </a>
     </Link>
   );
