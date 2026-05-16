@@ -36,4 +36,6 @@ yarn-error.log*
 next-env.d.ts
 
 # documents
-project-artifacts
+project-artifacts/01-requirements/
+project-artifacts/02-architecture/
+project-artifacts/09-consolidated-guides/
