@@ -11,7 +11,9 @@ const ForecastCard = ({ forecast }) => {
         icon
       </div>
 
-      <p className={styles.time}>{formatForecastTime(forecast.dateTime)}</p>
+      <p className={styles.time}>
+        {forecast.displayTime || formatForecastTime(forecast.dateTime)}
+      </p>
 
       <div className={styles.weather}>
         <p className={styles.description}>{forecast.description}</p>

@@ -1,5 +1,29 @@
 const getForecastDateKey = (dateTime) => {
-  return new Date(dateTime).toISOString().slice(0, 10);
+  return dateTime.slice(0, 10);
+};
+
+const FORECAST_DISPLAY_HOURS = [3, 6, 9, 12, 15, 18, 21];
+const FORECAST_SLOT_TOLERANCE_HOURS = 2;
+
+const getForecastHour = (dateTime) => {
+  return Number(dateTime.slice(11, 13));
+};
+
+const formatDisplayHour = (hour) => {
+  const suffix = hour < 12 ? 'am' : 'pm';
+
+  return `${String(hour).padStart(2, '0')}:00${suffix}`;
+};
+
+const findClosestForecastByHour = (forecasts, targetHour, usedDateTimes) => {
+  return forecasts
+    .filter((forecast) => !usedDateTimes.has(forecast.dateTime))
+    .map((forecast) => ({
+      distance: Math.abs(getForecastHour(forecast.dateTime) - targetHour),
+      forecast,
+    }))
+    .filter(({ distance }) => distance <= FORECAST_SLOT_TOLERANCE_HOURS)
+    .sort((left, right) => left.distance - right.distance)[0]?.forecast;
 };
 
 const getAverage = (values) => {
@@ -47,30 +71,51 @@ export const getDailyForecastGroups = (forecasts = []) => {
   }, {});
 
   return Object.entries(forecastGroups)
-    .slice(0, 5)
-    .map(([dateKey, items]) => ({
-      dateKey,
-      dateTime: items[0].dateTime,
-      forecasts: items.slice(0, 7),
-    }));
+    .map(([dateKey, items]) => {
+      const usedDateTimes = new Set();
+      const displayForecasts = FORECAST_DISPLAY_HOURS.reduce(
+        (forecastsForDisplay, displayHour) => {
+          const forecast = findClosestForecastByHour(items, displayHour, usedDateTimes);
+
+          if (!forecast) {
+            return forecastsForDisplay;
+          }
+
+          usedDateTimes.add(forecast.dateTime);
+
+          return [
+            ...forecastsForDisplay,
+            {
+              ...forecast,
+              displayTime: formatDisplayHour(displayHour),
+            },
+          ];
+        },
+        []
+      );
+
+      return {
+        dateKey,
+        dateTime: displayForecasts[0]?.dateTime || items[0].dateTime,
+        forecasts: displayForecasts,
+      };
+    })
+    .filter((forecastGroup) => forecastGroup.forecasts.length > 0)
+    .slice(0, 5);
 };
 
 export const formatForecastDate = (dateTime) => {
+  const [year, month, day] = getForecastDateKey(dateTime).split('-').map(Number);
+
   return new Intl.DateTimeFormat('en-US', {
     timeZone: 'UTC',
     month: 'short',
     day: 'numeric',
-  }).format(new Date(dateTime));
+  }).format(new Date(Date.UTC(year, month - 1, day)));
 };
 
 export const formatForecastTime = (dateTime) => {
-  return new Intl.DateTimeFormat('en-US', {
-    timeZone: 'UTC',
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: true,
-  })
-    .format(new Date(dateTime))
-    .replace(' ', '')
-    .toLowerCase();
+  const hour = getForecastHour(dateTime);
+
+  return formatDisplayHour(hour);
 };
