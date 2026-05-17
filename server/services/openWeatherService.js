@@ -60,11 +60,17 @@ const getPrimaryWeather = (weatherList) => {
   return weatherList?.[0] || {};
 };
 
-const toIsoString = (unixSeconds) => {
-  return new Date(unixSeconds * 1000).toISOString();
+const toLocalIsoString = (unixSeconds, timezoneOffsetSeconds = 0) => {
+  return new Date((unixSeconds + timezoneOffsetSeconds) * 1000)
+    .toISOString()
+    .replace('Z', '');
 };
 
-const mapCurrentWeather = (currentData) => {
+const getTimezoneOffsetSeconds = (...timezoneOffsets) => {
+  return timezoneOffsets.find((timezoneOffset) => Number.isFinite(timezoneOffset)) || 0;
+};
+
+const mapCurrentWeather = (currentData, timezoneOffsetSeconds) => {
   const weather = getPrimaryWeather(currentData.weather);
 
   return {
@@ -74,15 +80,15 @@ const mapCurrentWeather = (currentData) => {
     windSpeed: currentData.wind?.speed || 0,
     description: weather.description || '',
     icon: weather.icon || '',
-    measuredAt: toIsoString(currentData.dt),
+    measuredAt: toLocalIsoString(currentData.dt, timezoneOffsetSeconds),
   };
 };
 
-const mapForecastWeather = (forecastItem) => {
+const mapForecastWeather = (forecastItem, timezoneOffsetSeconds) => {
   const weather = getPrimaryWeather(forecastItem.weather);
 
   return {
-    dateTime: toIsoString(forecastItem.dt),
+    dateTime: toLocalIsoString(forecastItem.dt, timezoneOffsetSeconds),
     temperature: forecastItem.main.temp,
     humidity: forecastItem.main.humidity,
     windSpeed: forecastItem.wind?.speed || 0,
@@ -103,11 +109,17 @@ export const getWeatherByCity = async (cityName) => {
     requestOpenWeather('/weather', locationParams),
     requestOpenWeather('/forecast', locationParams),
   ]);
+  const timezoneOffsetSeconds = getTimezoneOffsetSeconds(
+    forecastData.city?.timezone,
+    currentData.timezone
+  );
 
   return {
     city: city.name,
     country: currentData.sys?.country || city.countryCode,
-    current: mapCurrentWeather(currentData),
-    forecast: (forecastData.list || []).map(mapForecastWeather),
+    current: mapCurrentWeather(currentData, timezoneOffsetSeconds),
+    forecast: (forecastData.list || []).map((forecastItem) =>
+      mapForecastWeather(forecastItem, timezoneOffsetSeconds)
+    ),
   };
 };
